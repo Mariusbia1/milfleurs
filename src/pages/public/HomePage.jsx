@@ -18,7 +18,7 @@ export default function HomePage() {
   return <><SEO title="Milfleurs | Beauté, soins & compléments authentiques" />
     <section className="relative min-h-[82vh] overflow-hidden bg-[#f9dbe5]">
       <img src={heroImage} alt="Sélection beauté et bien-être Milfleurs" className="absolute inset-0 h-full w-full object-cover object-center" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#fff8fb] via-[#fff8fb]/80 to-transparent" />
+      <div className="hero-overlay absolute inset-0 bg-gradient-to-r from-[#fff8fb] via-[#fff8fb]/80 to-transparent dark:from-[#1f0d18] dark:via-[#351527]/95 dark:to-[#351527]/55" />
       <div className="relative mx-auto flex min-h-[82vh] max-w-7xl items-center px-5 py-16 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
           <span className="inline-flex rounded-full border border-gold/25 bg-white/80 px-4 py-2 text-[10px] font-bold uppercase tracking-[.24em] text-gold shadow-sm backdrop-blur">Authentique · Importé · Sélectionné</span>

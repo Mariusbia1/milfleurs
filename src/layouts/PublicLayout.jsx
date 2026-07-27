@@ -5,12 +5,13 @@ import Footer from '../components/layout/Footer'
 export default function PublicLayout() {
   const { pathname } = useLocation()
   const isMobileCart = pathname === '/panier'
+  const isCheckout = pathname === '/commande' || pathname === '/commande/confirmation'
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [pathname])
   return <>
-    <div className={`sticky top-0 z-40 ${isMobileCart ? 'hidden md:block' : ''}`}><Header /></div>
+    <div className={`sticky top-0 z-40 ${isCheckout ? 'hidden' : isMobileCart ? 'hidden md:block' : ''}`}><Header /></div>
     <main><Outlet /></main>
-    <div className={isMobileCart ? 'hidden md:block' : ''}><Footer /></div>
+    <div className={isCheckout ? 'hidden' : isMobileCart ? 'hidden md:block' : ''}><Footer /></div>
   </>
 }
