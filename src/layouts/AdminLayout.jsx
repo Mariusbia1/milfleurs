@@ -28,7 +28,8 @@ function SidebarContent({ onNavigate }) {
   }
 
   return <>
-    <div className="flex h-24 items-center border-b border-white/10 px-6">
+    <div className="flex h-24 items-center gap-3 border-b border-white/10 px-6">
+      <img src="/app-icon.svg?v=3" alt="Icône Milfleurs" className="h-12 w-12 rounded-2xl shadow-lg" />
       <div>
         <p className="font-display text-2xl text-white">Milfleurs</p>
         <p className="mt-1 text-[9px] font-bold uppercase tracking-[.28em] text-[#ff9fc3]">Espace administration</p>
@@ -63,7 +64,7 @@ function SidebarContent({ onNavigate }) {
     <div className="mt-auto p-4">
       <div className="mb-3 rounded-2xl border border-white/10 bg-white/5 p-3">
         <div className="flex items-center gap-3">
-          <div className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-[#ff9fc3] to-[#ef4f8b] font-display text-lg text-white">M</div>
+          <img src="/app-icon.svg?v=3" alt="" className="h-10 w-10 rounded-full shadow-md" />
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-white">Milfleurs</p>
             <p className="truncate text-[10px] text-white/45">Administratrice</p>
@@ -122,7 +123,7 @@ export default function AdminLayout() {
               <Bell className="h-4 w-4" />
               <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full border-2 border-white bg-[#ef4f8b]" />
             </button>
-            <div className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-[#ff9fc3] to-[#e84f8a] font-display text-lg text-white shadow-md">M</div>
+            <img src="/app-icon.svg?v=3" alt="Profil administrateur" className="h-11 w-11 rounded-2xl shadow-md" />
           </div>
         </header>
 
