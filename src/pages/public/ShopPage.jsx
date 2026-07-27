@@ -36,9 +36,9 @@ export default function ShopPage({ categorySlug }) {
     <div className="sticky top-20 z-30 border-b border-rose/10 bg-white/95 shadow-sm backdrop-blur-xl dark:bg-plum/95">
       <div className="mx-auto max-w-7xl px-4 py-4 lg:px-8">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-          <label className="flex flex-1 items-center gap-3 rounded-full border border-rose/20 bg-mist/60 px-5 py-3.5 focus-within:border-gold focus-within:ring-4 focus-within:ring-rose/10">
+          <label className="flex flex-1 items-center gap-3 rounded-full border border-rose/20 bg-mist/60 px-5 py-3.5 focus-within:border-gold focus-within:ring-4 focus-within:ring-rose/10 dark:border-white/15 dark:bg-white/10">
             <Search className="h-4 w-4 text-gold" />
-            <input className="w-full bg-transparent text-sm outline-none" placeholder="Rechercher un produit, un soin…" value={query} onChange={e => setQuery(e.target.value)} />
+            <input className="w-full !bg-transparent text-sm outline-none dark:!bg-transparent dark:text-white dark:placeholder:text-white/60" placeholder="Rechercher un produit, un soin…" value={query} onChange={e => setQuery(e.target.value)} />
           </label>
           <select className="rounded-full border border-rose/20 bg-white px-5 py-3.5 text-sm" value={sort} onChange={e => setSort(e.target.value)}>
             <option value="nouveautes">Nouveautés</option>
