@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, Package, Shapes, ShoppingCart, Images, Quote,
-  FileText, Settings, User, LogOut, Search, Bell, Menu, X, ChevronRight,
+  FileText, Settings, User, LogOut, Search, Bell, Menu, X, ChevronRight, Store,
 } from 'lucide-react'
 import { useAdminAuth } from '../contexts/AdminAuthContext'
 
@@ -115,6 +115,10 @@ export default function AdminLayout() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            <Link to="/" className="flex h-11 items-center gap-2 rounded-2xl border border-[#f3d2df] bg-white px-3 text-xs font-bold text-[#a52e5d] transition hover:border-[#e84f8a] hover:bg-[#fff0f6] sm:px-4 dark:border-white/10 dark:bg-white/5 dark:text-[#ff9fc3] dark:hover:bg-white/10" aria-label="Voir la boutique">
+              <Store className="h-4 w-4" />
+              <span className="hidden sm:inline">Voir la boutique</span>
+            </Link>
             <label className="hidden h-11 min-w-64 items-center gap-3 rounded-2xl border border-[#f3d2df] bg-[#fff8fb] px-4 xl:flex dark:border-white/10 dark:bg-white/5">
               <Search className="h-4 w-4 text-[#d84b7f]" />
               <input placeholder="Rechercher dans l’administration" className="w-full bg-transparent text-xs outline-none" />
