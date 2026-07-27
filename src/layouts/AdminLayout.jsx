@@ -5,6 +5,7 @@ import {
   FileText, Settings, User, LogOut, Search, Bell, Menu, X, ChevronRight, Store,
 } from 'lucide-react'
 import { useAdminAuth } from '../contexts/AdminAuthContext'
+import InstallAppButton from '../components/common/InstallAppButton'
 
 const nav = [
   ['/admin', LayoutDashboard, 'Tableau de bord'],
@@ -62,6 +63,9 @@ function SidebarContent({ onNavigate }) {
     </div>
 
     <div className="mt-auto p-4">
+      <div className="mb-3">
+        <InstallAppButton label="Installer Milfleurs Admin" />
+      </div>
       <div className="mb-3 rounded-2xl border border-white/10 bg-white/5 p-3">
         <div className="flex items-center gap-3">
           <img src="/app-icon.svg?v=3" alt="" className="h-10 w-10 rounded-full shadow-md" />

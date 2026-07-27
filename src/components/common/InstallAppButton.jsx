@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Download } from 'lucide-react'
 import toast from 'react-hot-toast'
 
-export default function InstallAppButton({ compact = false }) {
+export default function InstallAppButton({ compact = false, label = 'Installer Milfleurs' }) {
   const [installPrompt, setInstallPrompt] = useState(null)
   const [installed, setInstalled] = useState(
     window.matchMedia?.('(display-mode: standalone)').matches
@@ -48,10 +48,10 @@ export default function InstallAppButton({ compact = false }) {
         ? 'grid h-10 w-10 place-items-center rounded-full bg-mist text-gold'
         : 'flex w-full items-center justify-center gap-2 rounded-2xl border border-rose/25 bg-white px-4 py-3 text-sm font-semibold text-gold shadow-sm dark:bg-white/5'
       }
-      aria-label="Installer Milfleurs"
+      aria-label={label}
     >
       <Download className="h-4 w-4" />
-      {!compact && 'Installer Milfleurs'}
+      {!compact && label}
     </button>
   )
 }
