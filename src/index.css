@@ -20,7 +20,19 @@
   }
 
   .dark .hero-overlay {
-    background: linear-gradient(90deg, rgb(31 13 24 / .98) 0%, rgb(53 21 39 / .96) 55%, rgb(53 21 39 / .72) 100%) !important;
+    background: linear-gradient(90deg, rgb(255 248 251 / .98) 0%, rgb(255 248 251 / .88) 52%, transparent 100%) !important;
+  }
+
+  .dark .hero-content { color: #2B1524 !important; }
+  .dark .hero-content .text-black\/50,
+  .dark .hero-content .text-black\/60 { color: rgb(43 21 36 / .65) !important; }
+  .dark .hero-content .border-ink {
+    border-color: #2B1524 !important;
+    color: #2B1524 !important;
+  }
+  .dark .hero-content .border-ink:hover {
+    background-color: #2B1524 !important;
+    color: #FFFFFF !important;
   }
 
   .knit-texture {
