@@ -13,7 +13,7 @@ import Button from '../components/common/Button'
 
 const Category = () => { const { slug } = useParams(); return <ShopPage categorySlug={slug}/> }
 const LegacyProduct = () => { const { slug } = useParams(); return <Navigate to={`/collections/${slug}`} replace/> }
-const NotFound = () => <div className="grid min-h-[60vh] place-items-center px-5 text-center"><div><p className="font-display text-8xl text-linen">404</p><h1 className="font-display text-4xl">Cette page n’existe pas</h1><Button to="/" className="mt-7">Retour à l’accueil</Button></div></div>
+const NotFound = () => <div className="grid min-h-[60vh] place-items-center px-5 text-center"><div><p className="font-display text-8xl text-stone-200 dark:text-white/10 font-bold">404</p><h1 className="font-display text-4xl text-ink dark:text-white mt-2">Cette page n’existe pas</h1><p className="mt-3 text-sm text-stone-500">Le contenu recherché a été déplacé ou n'est plus accessible.</p><Button to="/" variant="dark" className="mt-7">Retour à l’accueil</Button></div></div>
 
 export default function AppRoutes(){
   return <Suspense fallback={<div className="grid min-h-screen place-items-center font-display text-2xl">Milfleurs</div>}><Routes>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight, X, MessageCircle, Mail, MapPin } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X, MessageCircle, Mail, MapPin, ShieldCheck, HeartHandshake, Sparkles } from 'lucide-react'
 import SEO from '../../components/common/SEO'
 import Button from '../../components/common/Button'
 import Accordion from '../../components/common/Accordion'
@@ -8,11 +8,267 @@ import { faq } from '../../data/faq'
 import { siteConfig } from '../../config/siteConfig'
 import heroImage from '../../assets/milfleur-hero.png'
 
-export function AboutPage(){return <><SEO title="Notre histoire | Milfleurs"/><section className="grid md:grid-cols-2"><div className="flex items-center bg-gradient-to-br from-mist to-linen p-10 md:p-20"><div><p className="text-xs font-bold uppercase tracking-[.2em] text-gold">Notre histoire</p><h1 className="mt-5 font-display text-5xl">Rendre la beauté authentique plus accessible.</h1><p className="mt-7 leading-8 text-black/60">Milfleurs est née d’une envie simple : réunir au même endroit des cosmétiques, des soins ciblés et des compléments nutritionnels appréciés à travers le monde. Notre sélection vient notamment de France, d’Allemagne, des États-Unis et de Corée.</p></div></div><div className="relative min-h-[560px]"><img src={heroImage} alt="Sélection beauté et bien-être Milfleurs" className="absolute inset-0 h-full w-full object-cover"/><div className="absolute inset-0 bg-rose/15 mix-blend-color"/></div></section><section className="mx-auto max-w-5xl px-5 py-24"><h2 className="font-display text-4xl">La confiance comme signature</h2><div className="mt-8 columns-1 gap-12 md:columns-2"><p className="mb-6 leading-8 text-black/60">Chaque référence est choisie pour sa pertinence dans une routine beauté ou bien-être. Nous privilégions les emballages scellés, une information claire et un accompagnement humain avant la commande.</p><p className="leading-8 text-black/60">Notre engagement : vous proposer une sélection lisible, une expérience de commande simple sur WhatsApp et une livraison préparée avec soin.</p></div></section></>}
+export function AboutPage() {
+  return (
+    <>
+      <SEO title="Notre histoire | Milfleurs" />
 
-export function GalleryPage(){const [active,setActive]=useState(null);return <><SEO title="Nos univers | Milfleurs"/><div className="mx-auto max-w-7xl px-5 py-16"><div className="text-center"><p className="text-xs font-bold uppercase tracking-[.2em] text-gold">Beauté & bien-être</p><h1 className="mt-4 font-display text-5xl">Nos univers</h1></div><div className="mt-12 columns-2 gap-4 md:columns-3">{gallery.map((g,i)=><button key={g.id} onClick={()=>setActive(i)} className="group relative mb-4 block w-full overflow-hidden rounded-3xl"><img src={g.image} alt={g.title} className={`w-full object-cover ${i%3===0?'aspect-[3/4]':'aspect-square'}`}/><span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 p-4 pt-12 text-left text-sm text-white opacity-0 transition group-hover:opacity-100">{g.title}</span></button>)}</div></div>{active!==null&&<div className="fixed inset-0 z-50 grid place-items-center bg-black/95 p-5" role="dialog"><button className="absolute right-5 top-5 text-white" onClick={()=>setActive(null)}><X/></button><button className="absolute left-4 text-white" onClick={()=>setActive((active-1+gallery.length)%gallery.length)}><ChevronLeft/></button><img src={gallery[active].image} alt={gallery[active].title} className="max-h-[85vh] max-w-[85vw]"/><button className="absolute right-4 text-white" onClick={()=>setActive((active+1)%gallery.length)}><ChevronRight/></button></div>}</>}
+      {/* Hero section */}
+      <section className="relative overflow-hidden border-b border-stone-200/80 bg-mist/60 py-20 dark:border-white/10 dark:bg-white/[0.02]">
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">Notre histoire</p>
+          <h1 className="mt-4 font-display text-4xl font-normal sm:text-5xl md:text-6xl text-ink dark:text-white">
+            Rendre la beauté authentique accessible.
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-stone-600 sm:text-lg dark:text-white/70">
+            Milfleurs est née d’une mission exigeante : proposer un accès direct, transparent et garanti à des soins dermocosmétiques et compléments d’excellence, sans risque de contrefaçon.
+          </p>
+        </div>
+      </section>
 
-export function ContactPage(){return <><SEO title="Contact | Milfleurs"/><div className="mx-auto grid max-w-6xl gap-14 px-5 py-20 md:grid-cols-2"><div><p className="text-xs font-bold uppercase tracking-[.2em] text-gold">Nous sommes à votre écoute</p><h1 className="mt-4 font-display text-5xl">Une question sur un produit ?</h1><p className="mt-6 leading-8 text-black/60">Écrivez-nous. Nous vous aiderons à trouver une référence adaptée parmi les produits disponibles.</p><div className="mt-10 grid gap-5 text-sm"><p className="flex gap-3"><MessageCircle className="text-gold"/>{siteConfig.phone}</p><p className="flex gap-3"><Mail className="text-gold"/>{siteConfig.email}</p><p className="flex gap-3"><MapPin className="text-gold"/>{siteConfig.address}</p></div></div><form onSubmit={e=>e.preventDefault()} className="grid gap-4">{['Nom','E-mail','Téléphone','Sujet'].map(x=><label key={x} className="text-sm font-semibold">{x}<input className="mt-2 w-full border border-black/20 px-4 py-3"/></label>)}<label className="text-sm font-semibold">Message<textarea rows="5" className="mt-2 w-full resize-none border border-black/20 px-4 py-3"/></label><Button type="submit">Envoyer le message</Button></form></div></>}
-export function FaqPage(){return <><SEO title="Questions fréquentes | Milfleurs"/><div className="mx-auto max-w-3xl px-5 py-20"><h1 className="mb-10 text-center font-display text-5xl">Questions fréquentes</h1><Accordion items={faq}/></div></>}
-export function ConfirmationPage(){return <><SEO title="Commande transmise | Milfleurs"/><div className="grid min-h-[65vh] place-items-center px-5 text-center"><div><div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-linen"><MessageCircle/></div><h1 className="mt-6 font-display text-4xl">Votre demande est prête</h1><p className="mx-auto mt-4 max-w-lg leading-7 text-black/55">Votre commande a été ouverte dans WhatsApp. Envoyez le message pour que l’équipe Milfleurs puisse la confirmer avec vous.</p><Button to="/" className="mt-7">Retour à l’accueil</Button></div></div></>}
-export function LegalPage({title}){return <><SEO title={`${title} | Milfleurs`}/><article className="mx-auto max-w-3xl px-5 py-20"><h1 className="font-display text-5xl">{title}</h1><p className="mt-8 leading-8 text-black/60">Cette page présente les informations de référence de Milfleurs. Les modalités définitives seront mises à jour avant l’ouverture commerciale du service.</p><h2 className="mt-10 font-display text-2xl">Principes généraux</h2><p className="mt-4 leading-8 text-black/60">Les commandes sont confirmées après échange avec notre équipe. Les délais dépendent de la disponibilité des produits et de la destination de livraison.</p></article></>}
+      {/* Split Story Section */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div className="aspect-[4/3] overflow-hidden rounded-3xl border border-stone-200 bg-stone-100 dark:border-white/10">
+            <img
+              src={heroImage}
+              alt="Sélection beauté et bien-être Milfleurs"
+              className="h-full w-full object-cover"
+            />
+          </div>
+
+          <div className="space-y-6">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">Notre promesse</p>
+            <h2 className="font-display text-3xl font-normal sm:text-4xl text-ink dark:text-white">
+              La confiance comme signature
+            </h2>
+            <p className="leading-relaxed text-stone-600 dark:text-white/70">
+              Dans notre boutique, chaque référence est rigoureusement évaluée avant d'être intégrée au catalogue. Nous travaillons exclusivement avec des canaux certifiés en France, aux États-Unis et en Corée du Sud.
+            </p>
+            <p className="leading-relaxed text-stone-600 dark:text-white/70">
+              Parce que votre peau et votre santé méritent ce qu'il y a de plus sûr, tous nos produits sont scellés d’origine et expédiés avec une traçabilité totale.
+            </p>
+
+            <div className="grid grid-cols-2 gap-4 pt-4">
+              <div className="rounded-2xl border border-stone-200/80 bg-white p-5 dark:border-white/10 dark:bg-white/5">
+                <ShieldCheck className="h-6 w-6 text-gold" />
+                <h3 className="mt-3 font-semibold text-sm text-ink dark:text-white">100% Vérifié</h3>
+                <p className="mt-1 text-xs text-stone-500 dark:text-white/60">Circuits courts et officiels.</p>
+              </div>
+              <div className="rounded-2xl border border-stone-200/80 bg-white p-5 dark:border-white/10 dark:bg-white/5">
+                <HeartHandshake className="h-6 w-6 text-gold" />
+                <h3 className="mt-3 font-semibold text-sm text-ink dark:text-white">Conseil Expert</h3>
+                <p className="mt-1 text-xs text-stone-500 dark:text-white/60">Écoute attentive sur WhatsApp.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
+
+export function GalleryPage() {
+  const [active, setActive] = useState(null)
+
+  return (
+    <>
+      <SEO title="Nos univers | Milfleurs" />
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">Inspirations & Rituels</p>
+          <h1 className="mt-3 font-display text-4xl font-normal sm:text-5xl text-ink dark:text-white">Nos univers</h1>
+          <p className="mx-auto mt-4 max-w-xl text-sm text-stone-500 dark:text-white/60">
+            Une immersion dans nos différentes gammes de soins et de compléments bien-être.
+          </p>
+        </div>
+
+        <div className="mt-12 columns-2 gap-4 md:columns-3 lg:columns-4">
+          {gallery.map((g, i) => (
+            <button
+              key={g.id}
+              onClick={() => setActive(i)}
+              className="group relative mb-4 block w-full overflow-hidden rounded-2xl border border-stone-200/80 bg-stone-100 text-left transition hover:shadow-soft dark:border-white/10 dark:bg-white/5"
+            >
+              <img
+                src={g.image}
+                alt={g.title}
+                className="w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 transition group-hover:opacity-100" />
+              <div className="absolute inset-x-0 bottom-0 p-4 text-white opacity-0 transition group-hover:opacity-100">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-gold">{g.category}</p>
+                <p className="font-display text-sm font-semibold">{g.title}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {active !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4" role="dialog">
+          <button
+            className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20"
+            onClick={() => setActive(null)}
+          >
+            <X className="h-5 w-5" />
+          </button>
+          <button
+            className="absolute left-4 top-1/2 -translate-y-1/2 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20"
+            onClick={() => setActive((active - 1 + gallery.length) % gallery.length)}
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <div className="max-h-[85vh] max-w-[85vw] overflow-hidden rounded-2xl bg-white p-4">
+            <img src={gallery[active].image} alt={gallery[active].title} className="max-h-[75vh] w-auto object-contain" />
+            <p className="mt-3 text-center font-display text-lg font-semibold text-ink">{gallery[active].title}</p>
+          </div>
+          <button
+            className="absolute right-4 top-1/2 -translate-y-1/2 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20"
+            onClick={() => setActive((active + 1) % gallery.length)}
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+      )}
+    </>
+  )
+}
+
+export function ContactPage() {
+  return (
+    <>
+      <SEO title="Contact | Milfleurs" />
+      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-24 lg:px-8">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">À votre écoute</p>
+          <h1 className="mt-3 font-display text-3xl font-normal sm:text-4xl md:text-5xl text-ink dark:text-white">
+            Une question sur un soin ou une commande ?
+          </h1>
+          <p className="mt-5 text-sm leading-relaxed text-stone-600 sm:text-base dark:text-white/70">
+            Écrivez-nous directement. Notre équipe vous conseille pour choisir les formules les plus adaptées à vos besoins.
+          </p>
+
+          <div className="mt-10 space-y-5 text-sm">
+            <div className="flex items-center gap-4">
+              <div className="grid h-11 w-11 place-items-center rounded-full bg-mist text-gold dark:bg-white/10">
+                <MessageCircle className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-xs text-stone-400">WhatsApp & Téléphone</p>
+                <p className="font-semibold text-ink dark:text-white">{siteConfig.phone}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="grid h-11 w-11 place-items-center rounded-full bg-mist text-gold dark:bg-white/10">
+                <Mail className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-xs text-stone-400">E-mail</p>
+                <p className="font-semibold text-ink dark:text-white">{siteConfig.email}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="grid h-11 w-11 place-items-center rounded-full bg-mist text-gold dark:bg-white/10">
+                <MapPin className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-xs text-stone-400">Localisation</p>
+                <p className="font-semibold text-ink dark:text-white">{siteConfig.address}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form onSubmit={e => e.preventDefault()} className="rounded-3xl border border-stone-200/80 bg-white p-8 shadow-xs dark:border-white/10 dark:bg-white/5">
+          <h2 className="font-display text-xl font-semibold text-ink dark:text-white">Envoyez-nous un message</h2>
+          <div className="mt-6 space-y-4">
+            {['Nom complet', 'E-mail', 'Téléphone', 'Objet de votre message'].map(field => (
+              <label key={field} className="block text-xs font-semibold text-stone-700 dark:text-white/80">
+                {field}
+                <input className="mt-1.5 w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/15 dark:border-white/15 dark:bg-white/5 dark:text-white" />
+              </label>
+            ))}
+            <label className="block text-xs font-semibold text-stone-700 dark:text-white/80">
+              Votre message
+              <textarea rows="4" className="mt-1.5 w-full resize-none rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/15 dark:border-white/15 dark:bg-white/5 dark:text-white" />
+            </label>
+            <Button type="submit" variant="dark" className="w-full">
+              Envoyer le message
+            </Button>
+          </div>
+        </form>
+      </div>
+    </>
+  )
+}
+
+export function FaqPage() {
+  return (
+    <>
+      <SEO title="Questions fréquentes | Milfleurs" />
+      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 md:py-24">
+        <div className="mb-12 text-center">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">Aide & Informations</p>
+          <h1 className="mt-3 font-display text-4xl font-normal sm:text-5xl text-ink dark:text-white">Questions fréquentes</h1>
+          <p className="mt-4 text-sm text-stone-500 dark:text-white/60">
+            Retrouvez ici les réponses aux interrogations les plus courantes sur nos produits et la livraison.
+          </p>
+        </div>
+        <Accordion items={faq} />
+      </div>
+    </>
+  )
+}
+
+export function ConfirmationPage() {
+  return (
+    <>
+      <SEO title="Commande transmise | Milfleurs" />
+      <div className="grid min-h-[65vh] place-items-center px-4 py-20 text-center">
+        <div className="max-w-md">
+          <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+            <MessageCircle className="h-8 w-8" />
+          </div>
+          <h1 className="mt-6 font-display text-3xl font-normal text-ink sm:text-4xl dark:text-white">
+            Votre demande est prête !
+          </h1>
+          <p className="mt-4 text-sm leading-relaxed text-stone-600 dark:text-white/70">
+            Votre commande a été préparée pour WhatsApp. Il vous suffit d'envoyer le message pour que notre équipe confirme vos articles et planifie la livraison.
+          </p>
+          <div className="mt-8 flex justify-center">
+            <Button to="/" variant="dark">
+              Retour à l’accueil
+            </Button>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
+export function LegalPage({ title }) {
+  return (
+    <>
+      <SEO title={`${title} | Milfleurs`} />
+      <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6 md:py-24">
+        <h1 className="font-display text-3xl font-normal sm:text-4xl md:text-5xl text-ink dark:text-white">{title}</h1>
+        <div className="mt-8 space-y-6 text-sm leading-relaxed text-stone-600 dark:text-white/70">
+          <p>
+            Cette page présente les mentions de référence de Milfleurs. Notre engagement porte sur la transparence, la protection de vos données personnelles et l’authenticité des articles distribués.
+          </p>
+          <h2 className="font-display text-2xl font-semibold text-ink dark:text-white">Commandes & Règlements</h2>
+          <p>
+            Les commandes initiées sur ce site sont validées et confirmées en échange direct avec nos conseillers via WhatsApp. Aucun débit n'est effectué directement sur le site.
+          </p>
+          <h2 className="font-display text-2xl font-semibold text-ink dark:text-white">Délais de livraison</h2>
+          <p>
+            Les délais habituels sont de 24 à 48 heures pour les livraisons à Cotonou et ses environs, et de 3 à 7 jours ouvrés pour les expéditions régionales ou internationales.
+          </p>
+        </div>
+      </article>
+    </>
+  )
+}

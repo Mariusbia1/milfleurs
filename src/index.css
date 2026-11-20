@@ -5,108 +5,98 @@
 @layer base {
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; min-width: 320px; overflow-x: hidden; background: #FFF9FC; color: #2B1524; font-family: Manrope, sans-serif; transition: background-color .35s ease, color .35s ease; }
-  .dark body { background: #24101D; color: #FFF7FB; }
-  ::selection { background: #FFFFFF; color: #A52E5D; text-shadow: none; }
-  ::-moz-selection { background: #FFFFFF; color: #A52E5D; text-shadow: none; }
+  body {
+    margin: 0;
+    min-width: 320px;
+    overflow-x: hidden;
+    background: #FAF8F5;
+    color: #1A1517;
+    font-family: Manrope, sans-serif;
+    transition: background-color .3s ease, color .3s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .dark body {
+    background: #151214;
+    color: #FAF8F5;
+  }
+  ::selection { background: #1A1517; color: #FAF8F5; }
+  ::-moz-selection { background: #1A1517; color: #FAF8F5; }
   img { display: block; }
-  button, a, input, textarea, select { outline-offset: 3px; }
+  button, a, input, textarea, select { outline-offset: 2px; }
   button { cursor: pointer; }
 }
 
 @layer components {
+  /* Subtle hero gradient overlay for text readability without washing out colors */
   .hero-overlay {
-    background: linear-gradient(90deg, rgb(255 248 251 / .98) 0%, rgb(255 248 251 / .88) 52%, transparent 100%);
+    background: linear-gradient(90deg, rgba(250, 248, 245, 0.96) 0%, rgba(250, 248, 245, 0.82) 48%, rgba(250, 248, 245, 0.2) 80%, transparent 100%);
   }
 
   .dark .hero-overlay {
-    background: linear-gradient(90deg, rgb(255 248 251 / .98) 0%, rgb(255 248 251 / .88) 52%, transparent 100%) !important;
-  }
-
-  .dark .hero-content { color: #2B1524 !important; }
-  .dark .hero-content .text-black\/50,
-  .dark .hero-content .text-black\/60 { color: rgb(43 21 36 / .65) !important; }
-  .dark .hero-content .border-ink {
-    border-color: #2B1524 !important;
-    color: #2B1524 !important;
-  }
-  .dark .hero-content .border-ink:hover {
-    background-color: #2B1524 !important;
-    color: #FFFFFF !important;
-  }
-
-  .knit-texture {
-    background-image:
-      radial-gradient(circle at 20% 20%, rgb(255 255 255 / .5) 0 1px, transparent 1.5px),
-      radial-gradient(circle at 80% 80%, rgb(232 79 138 / .2) 0 1px, transparent 1.5px);
-    background-size: 14px 14px;
+    background: linear-gradient(90deg, rgba(21, 18, 20, 0.96) 0%, rgba(21, 18, 20, 0.85) 50%, rgba(21, 18, 20, 0.25) 80%, transparent 100%) !important;
   }
 
   .admin-content > * {
-    animation: admin-fade-in .35s ease both;
+    animation: admin-fade-in .25s ease both;
   }
 
   .admin-content .bg-white {
-    border: 1px solid rgb(236 72 134 / .1);
-    border-radius: 1.5rem;
-    box-shadow: 0 14px 45px rgb(100 27 59 / .07);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   }
 
   .admin-content input,
   .admin-content textarea,
   .admin-content select {
-    border-color: #f0cad9;
-    border-radius: .9rem;
-    background-color: #fffafd;
+    border-color: #E6DDD4;
+    border-radius: 0.75rem;
+    background-color: #FFFFFF;
     transition: border-color .2s ease, box-shadow .2s ease;
   }
 
   .admin-content input:focus,
   .admin-content textarea:focus,
   .admin-content select:focus {
-    border-color: #e84f8a;
-    box-shadow: 0 0 0 4px rgb(232 79 138 / .1);
+    border-color: #B9864E;
+    box-shadow: 0 0 0 3px rgba(185, 134, 78, 0.15);
     outline: none;
   }
 
   .admin-content table thead {
-    color: #a64167;
+    color: #6B5B62;
   }
 
   .admin-content table tbody tr {
-    transition: background-color .2s ease;
+    transition: background-color .15s ease;
   }
 
   .admin-content table tbody tr:hover {
-    background-color: #fff3f8;
-  }
-
-  .admin-content table td,
-  .admin-content table th {
-    padding-left: .75rem;
-    padding-right: .75rem;
+    background-color: #F8F5F1;
   }
 
   .dark .admin-content .bg-white {
-    border-color: rgb(255 255 255 / .08);
-    background-color: #321322;
-    box-shadow: 0 14px 45px rgb(0 0 0 / .16);
+    border-color: rgba(255, 255, 255, 0.08);
+    background-color: #211B1E;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   }
 
   .dark .admin-content input,
   .dark .admin-content textarea,
   .dark .admin-content select {
-    border-color: rgb(255 255 255 / .12);
-    background-color: #28101c;
+    border-color: rgba(255, 255, 255, 0.12);
+    background-color: #1A1517;
+    color: #FAF8F5;
   }
 
   .dark .admin-content table tbody tr:hover {
-    background-color: rgb(255 255 255 / .035);
+    background-color: rgba(255, 255, 255, 0.04);
   }
 }
 
 @keyframes admin-fade-in {
-  from { opacity: 0; transform: translateY(7px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -116,31 +106,24 @@
   html:not(.dark) .bg-mist,
   html:not(.dark) .bg-linen,
   html:not(.dark) .bg-sand {
-    color: #2B1524;
+    color: #1A1517;
   }
+
   .dark .bg-ivory,
   .dark .bg-ivory\/95,
-  .dark .bg-ivory\/90 { background-color: #24101D; }
-  .dark .bg-white { background-color: #351527; }
-  .dark .bg-mist { background-color: #3C172C; }
-  .dark .bg-linen { background-color: #501A35; }
-  .dark .bg-sand { background-color: #9E2F62; }
-  .dark .bg-ink { background-color: #190A13; }
+  .dark .bg-ivory\/90 { background-color: #151214; }
+  .dark .bg-white { background-color: #201A1D; }
+  .dark .bg-mist { background-color: #221B1E; }
+  .dark .bg-linen { background-color: #282024; }
+  .dark .bg-sand { background-color: #31272D; }
+  .dark .bg-ink { background-color: #110E10; }
   .dark .text-ink,
   .dark .text-plum,
-  .dark .text-brown { color: #FFF7FB; }
-  .dark .text-emerald-700 { color: #86EFAC; }
-  .dark .placeholder\:text-black\/40::placeholder { color: rgb(255 239 245 / .55); }
-  .dark .text-black\/40,
-  .dark .text-black\/45,
-  .dark .text-black\/50,
-  .dark .text-black\/55,
-  .dark .text-black\/60,
-  .dark .text-black\/65 { color: rgb(255 239 245 / .68); }
+  .dark .text-brown { color: #FAF8F5; }
   .dark .border-black\/5,
   .dark .border-black\/15,
-  .dark .border-black\/20 { border-color: rgb(255 255 255 / .14); }
+  .dark .border-black\/20 { border-color: rgba(255, 255, 255, 0.12); }
   .dark input,
   .dark textarea,
-  .dark select { color: #FFF7FB; background-color: #351527; }
+  .dark select { color: #FAF8F5; background-color: #201A1D; }
 }

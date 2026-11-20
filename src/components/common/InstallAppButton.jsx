@@ -45,8 +45,8 @@ export default function InstallAppButton({ compact = false, label = 'Installer M
     <button
       onClick={install}
       className={compact
-        ? 'grid h-10 w-10 place-items-center rounded-full bg-mist text-gold'
-        : 'flex w-full items-center justify-center gap-2 rounded-2xl border border-rose/25 bg-white px-4 py-3 text-sm font-semibold text-gold shadow-sm dark:bg-white/5'
+        ? 'grid h-9 w-9 place-items-center rounded-full bg-mist text-stone-700 transition hover:bg-stone-200 dark:bg-white/10 dark:text-white'
+        : 'flex w-full items-center justify-center gap-2 rounded-xl border border-stone-200/80 bg-white px-4 py-2.5 text-xs font-semibold text-ink shadow-xs transition hover:bg-stone-50 dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:bg-white/10'
       }
       aria-label={label}
     >

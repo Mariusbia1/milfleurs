@@ -5,24 +5,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#2B1524',
-        ivory: '#FFF9FC',
-        linen: '#FFE3EF',
-        sand: '#F8B8D1',
-        gold: '#E84F8A',
-        mist: '#FFF0F7',
-        brown: '#A52E5D',
-        blush: '#FFCAE0',
-        rose: '#EF76A7',
-        plum: '#4A1731',
+        ink: '#1A1517',       // Noir profond, doux et chaleureux
+        ivory: '#FAF8F5',     // Blanc cassé albâtre, lumineux et haut de gamme
+        linen: '#F2ECE6',     // Lin chaud et doux
+        sand: '#E6DDD4',      // Beige sable naturel
+        gold: '#B9864E',      // Doré champagne / bronze chaleureux et élégant
+        mist: '#F6F2EE',      // Surface douce et neutre
+        brown: '#4A2E35',     // Espresso raffiné
+        blush: '#EFE7E2',     // Nude poudré très subtil
+        rose: '#9E5F6B',      // Vieux rose poudré délicat
+        plum: '#22151B',      // Prune noire / noir velours
       },
       fontFamily: {
-        display: ['"Playfair Display"', 'serif'],
-        sans: ['Manrope', 'sans-serif'],
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
+        sans: ['Manrope', 'system-ui', '-apple-system', 'sans-serif'],
       },
       boxShadow: {
-        soft: '0 24px 70px rgba(174, 43, 96, 0.12)',
-        rose: '0 18px 50px rgba(232, 79, 138, 0.26)',
+        xs: '0 1px 2px rgba(0, 0, 0, 0.04)',
+        soft: '0 12px 36px -8px rgba(26, 21, 23, 0.08), 0 4px 12px -2px rgba(26, 21, 23, 0.03)',
+        card: '0 10px 30px -4px rgba(26, 21, 23, 0.05), 0 2px 6px -1px rgba(26, 21, 23, 0.02)',
+        elevated: '0 20px 45px -10px rgba(26, 21, 23, 0.12), 0 6px 16px -4px rgba(26, 21, 23, 0.04)',
       },
     },
   },
