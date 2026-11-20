@@ -4,7 +4,9 @@
 
 @layer base {
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     margin: 0;
     min-width: 320px;
@@ -25,6 +27,28 @@
   img { display: block; }
   button, a, input, textarea, select { outline-offset: 2px; }
   button { cursor: pointer; }
+
+  /* E-commerce luxury custom scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #DCD4CE;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #B9864E;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: #332B30;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #B9864E;
+  }
 }
 
 @layer components {
@@ -35,6 +59,26 @@
 
   .dark .hero-overlay {
     background: linear-gradient(90deg, rgba(21, 18, 20, 0.96) 0%, rgba(21, 18, 20, 0.85) 50%, rgba(21, 18, 20, 0.25) 80%, transparent 100%) !important;
+  }
+
+  /* E-commerce product rail scroll-snap */
+  .ecommerce-scroll-rail {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-left: 1rem;
+    scroll-padding-right: 1rem;
+  }
+
+  .ecommerce-scroll-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ecommerce-scroll-item {
+    scroll-snap-align: start;
+    flex-shrink: 0;
   }
 
   .admin-content > * {
@@ -101,6 +145,14 @@
 }
 
 @layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   html:not(.dark) .bg-white,
   html:not(.dark) .bg-ivory,
   html:not(.dark) .bg-mist,

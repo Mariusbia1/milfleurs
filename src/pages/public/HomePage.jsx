@@ -1,5 +1,6 @@
+import { useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, BadgeCheck, HeartPulse, PackageCheck, Star, MessageCircle, ShieldCheck, Award } from 'lucide-react'
+import { ArrowRight, BadgeCheck, HeartPulse, PackageCheck, Star, MessageCircle, ShieldCheck, Award, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import SEO from '../../components/common/SEO'
 import Button from '../../components/common/Button'
@@ -13,32 +14,56 @@ import { siteConfig } from '../../config/siteConfig'
 import heroImage from '../../assets/milfleur-hero.png'
 import skincareImage from '../../assets/milfleur-skincare.png'
 
-const SectionTitle = ({ eyebrow, children, subtitle }) => (
-  <div className="mb-12 text-center">
-    {eyebrow && (
-      <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-gold">
-        {eyebrow}
-      </p>
-    )}
-    <h2 className="font-display text-3xl font-normal sm:text-4xl md:text-5xl text-ink dark:text-white">
-      {children}
-    </h2>
-    {subtitle && (
-      <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-stone-600 dark:text-white/60">
-        {subtitle}
-      </p>
-    )}
+const SectionTitle = ({ eyebrow, children, subtitle, action }) => (
+  <div className="mb-8 flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
+    <div>
+      {eyebrow && (
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-gold">
+          {eyebrow}
+        </p>
+      )}
+      <h2 className="font-display text-3xl font-normal sm:text-4xl text-ink dark:text-white">
+        {children}
+      </h2>
+      {subtitle && (
+        <p className="mt-2 max-w-xl text-xs sm:text-sm leading-relaxed text-stone-600 dark:text-white/60">
+          {subtitle}
+        </p>
+      )}
+    </div>
+    {action}
   </div>
 )
 
 export default function HomePage() {
   const featuredProducts = products.filter(p => p.featured)
+  const productRailRef = useRef(null)
+  const testimonialRailRef = useRef(null)
+  const [productScrollProgress, setProductScrollProgress] = useState(0)
+
+  const scrollRail = (ref, direction) => {
+    if (ref.current) {
+      const scrollAmount = ref.current.clientWidth * 0.75
+      ref.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
+    }
+  }
+
+  const handleProductScroll = () => {
+    if (productRailRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = productRailRef.current
+      const progress = scrollWidth > clientWidth ? (scrollLeft / (scrollWidth - clientWidth)) * 100 : 0
+      setProductScrollProgress(progress)
+    }
+  }
 
   return (
     <>
       <SEO title="Milfleurs | Beauté, soins & compléments authentiques" />
 
-      {/* Hero Section - Editorial Luxury Look */}
+      {/* Hero Section */}
       <section className="relative min-h-[85vh] overflow-hidden bg-[#F6F2EE] dark:bg-[#181316]">
         <img
           src={heroImage}
@@ -104,7 +129,7 @@ export default function HomePage() {
       </section>
 
       {/* Brand Intro Statement */}
-      <section className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 md:py-28">
+      <section className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 md:py-24">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
           L’art de prendre soin de soi
         </p>
@@ -117,32 +142,71 @@ export default function HomePage() {
         </p>
       </section>
 
-      {/* Featured Products */}
-      <section className="bg-mist/70 py-20 dark:bg-white/[0.02]">
+      {/* Featured Products - Conforme au format scroll des boutiques e-commerce */}
+      <section className="bg-mist/70 py-16 md:py-20 dark:bg-white/[0.02]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionTitle
             eyebrow="Les incontournables"
-            subtitle="Nos meilleures références pour sublimer votre routine au quotidien."
+            subtitle="Faites défiler nos meilleures références pour sublimer votre rituel quotidien."
+            action={
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => scrollRail(productRailRef, 'left')}
+                  className="grid h-10 w-10 place-items-center rounded-full border border-stone-200 bg-white text-stone-700 shadow-xs transition hover:border-stone-400 hover:text-ink dark:border-white/15 dark:bg-white/5 dark:text-white"
+                  aria-label="Faire défiler vers la gauche"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={() => scrollRail(productRailRef, 'right')}
+                  className="grid h-10 w-10 place-items-center rounded-full border border-stone-200 bg-white text-stone-700 shadow-xs transition hover:border-stone-400 hover:text-ink dark:border-white/15 dark:bg-white/5 dark:text-white"
+                  aria-label="Faire défiler vers la droite"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+            }
           >
             Nos coups de cœur
           </SectionTitle>
 
-          <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
+          {/* Horizontal Scroll-Snap Product Rail */}
+          <div
+            ref={productRailRef}
+            onScroll={handleProductScroll}
+            className="ecommerce-scroll-rail gap-4 sm:gap-6 pb-6 pt-2"
+          >
             {featuredProducts.map(p => (
-              <ProductCard key={p.id} product={p} />
+              <div
+                key={p.id}
+                className="ecommerce-scroll-item w-[270px] sm:w-[290px] md:w-[310px]"
+              >
+                <ProductCard product={p} />
+              </div>
             ))}
           </div>
 
-          <div className="mt-12 text-center">
-            <Button to="/collections" variant="outline">
-              Voir toute la collection <ArrowRight className="h-4 w-4" />
-            </Button>
+          {/* E-Commerce Scroll Progress Bar */}
+          <div className="mt-4 flex items-center justify-between">
+            <div className="h-1 flex-1 max-w-xs overflow-hidden rounded-full bg-stone-200/80 dark:bg-white/10">
+              <div
+                className="h-full rounded-full bg-gold transition-all duration-150"
+                style={{ width: `${Math.max(15, productScrollProgress)}%` }}
+              />
+            </div>
+            <Link
+              to="/collections"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-gold hover:underline"
+            >
+              <span>Voir tout le catalogue ({products.length})</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Categories Grid - Editorial Visual Cards */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+      {/* Categories Grid / Scroll */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
         <SectionTitle
           eyebrow="Explorer"
           subtitle="Parcourez nos différents univers de beauté et de santé."
@@ -150,21 +214,21 @@ export default function HomePage() {
           Votre routine, à votre façon
         </SectionTitle>
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
+        {/* Scrollable categories on mobile, grid on tablet & desktop */}
+        <div className="ecommerce-scroll-rail gap-4 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible">
           {categories.map((c, i) => (
             <Link
               key={c.slug}
               to={`/categories/${c.slug}`}
               className={`${
                 i === 0 || i === 5 ? 'md:col-span-2' : ''
-              } group relative h-64 overflow-hidden rounded-2xl bg-stone-100 md:h-80`}
+              } ecommerce-scroll-item w-[260px] md:w-auto group relative h-64 overflow-hidden rounded-2xl bg-stone-100 md:h-80`}
             >
               <img
                 src={c.image}
                 alt={c.name}
                 className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
               />
-              {/* Subtle dark gradient scrim for clear legibility */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
                 <span className="font-display text-xl font-medium text-white sm:text-2xl">
@@ -231,8 +295,8 @@ export default function HomePage() {
       </section>
 
       {/* Trust Pillars */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
           {[
             [BadgeCheck, 'Produits 100% Authentiques', 'Directement importés auprès de fournisseurs agréés et certifiés.'],
             [Award, 'Sélection Ciblée', 'Des formules dermatologiques et nutritionnelles plébiscitées.'],
@@ -250,26 +314,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials - Refined Editorial Dark Luxury */}
+      {/* Testimonials - Conforme au scroll des avis e-commerce */}
       <section className="border-y border-stone-200/80 bg-ink py-20 text-white dark:border-white/10 dark:bg-[#110E10]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-14 text-center">
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-gold">
-              Témoignages clients
-            </p>
-            <h2 className="font-display text-3xl font-normal sm:text-4xl md:text-5xl text-white">
-              La communauté Milfleurs
-            </h2>
-            <p className="mt-3 text-sm text-white/60">
-              Ce que nos clientes et clients disent de leur expérience avec nous.
-            </p>
+          <div className="mb-10 flex flex-col items-center justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-gold">
+                Témoignages clients
+              </p>
+              <h2 className="font-display text-3xl font-normal sm:text-4xl text-white">
+                La communauté Milfleurs
+              </h2>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => scrollRail(testimonialRailRef, 'left')}
+                className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-white/5 text-white transition hover:bg-white/15"
+                aria-label="Avis précédent"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                onClick={() => scrollRail(testimonialRailRef, 'right')}
+                className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-white/5 text-white transition hover:bg-white/15"
+                aria-label="Avis suivant"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
+          {/* Testimonial Scroll Rail */}
+          <div
+            ref={testimonialRailRef}
+            className="ecommerce-scroll-rail gap-6 pb-4"
+          >
             {testimonials.map(t => (
               <blockquote
                 key={t.name}
-                className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-white/20"
+                className="ecommerce-scroll-item w-[300px] sm:w-[360px] flex flex-col justify-between rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-white/20"
               >
                 <div>
                   <div className="flex gap-1 text-gold">
@@ -292,7 +375,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-2 md:py-28">
+      <section className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-24">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
             Questions fréquentes
@@ -319,7 +402,7 @@ export default function HomePage() {
       </section>
 
       {/* Bottom CTA Banner */}
-      <section className="border-t border-stone-200/80 bg-mist/60 px-4 py-20 text-center sm:px-6 dark:border-white/10 dark:bg-white/[0.02]">
+      <section className="border-t border-stone-200/80 bg-mist/60 px-4 py-16 text-center sm:px-6 dark:border-white/10 dark:bg-white/[0.02]">
         <div className="mx-auto max-w-2xl">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
             Prêt à commencer ?

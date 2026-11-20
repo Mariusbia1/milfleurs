@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Minus, Plus, MessageCircle, ShieldCheck, Truck, RefreshCw, Check } from 'lucide-react'
+import { Minus, Plus, MessageCircle, ShieldCheck, Truck, RefreshCw, Check, ChevronLeft, ChevronRight } from 'lucide-react'
 import toast from 'react-hot-toast'
 import SEO from '../../components/common/SEO'
 import Button from '../../components/common/Button'
@@ -20,6 +20,17 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1)
   const [measurements, setMeasurements] = useState('')
   const [note, setNote] = useState('')
+  const relatedRailRef = useRef(null)
+
+  const scrollRelated = direction => {
+    if (relatedRailRef.current) {
+      const scrollAmount = relatedRailRef.current.clientWidth * 0.75
+      relatedRailRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
+    }
+  }
 
   if (!product) {
     return (
@@ -81,12 +92,12 @@ export default function ProductPage() {
             </div>
 
             {product.images.length > 1 && (
-              <div className="mt-4 flex gap-3">
+              <div className="ecommerce-scroll-rail mt-4 gap-3 pb-2">
                 {product.images.map((image, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveImage(i)}
-                    className={`h-20 w-20 overflow-hidden rounded-xl border-2 bg-[#FBF9F7] p-1 transition ${
+                    className={`ecommerce-scroll-item h-20 w-20 overflow-hidden rounded-xl border-2 bg-[#FBF9F7] p-1 transition ${
                       activeImage === i ? 'border-ink dark:border-white' : 'border-transparent opacity-70 hover:opacity-100'
                     }`}
                   >
@@ -247,18 +258,45 @@ export default function ProductPage() {
           </div>
         </div>
 
-        {/* Related Products */}
+        {/* Related Products - Conforme au format scroll e-commerce */}
         {related.length > 0 && (
           <section className="mt-24 border-t border-stone-200/80 pt-16 dark:border-white/10">
-            <div className="mb-10 text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">Suggestions</p>
-              <h2 className="mt-2 font-display text-3xl font-normal text-ink dark:text-white">
-                Vous aimerez aussi
-              </h2>
+            <div className="mb-8 flex items-center justify-between">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">Suggestions</p>
+                <h2 className="mt-1 font-display text-2xl font-normal text-ink sm:text-3xl dark:text-white">
+                  Vous aimerez aussi
+                </h2>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => scrollRelated('left')}
+                  className="grid h-9 w-9 place-items-center rounded-full border border-stone-200 bg-white text-stone-700 shadow-xs transition hover:border-stone-400 hover:text-ink dark:border-white/15 dark:bg-white/5 dark:text-white"
+                  aria-label="Précédent"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => scrollRelated('right')}
+                  className="grid h-9 w-9 place-items-center rounded-full border border-stone-200 bg-white text-stone-700 shadow-xs transition hover:border-stone-400 hover:text-ink dark:border-white/15 dark:bg-white/5 dark:text-white"
+                  aria-label="Suivant"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
+
+            <div
+              ref={relatedRailRef}
+              className="ecommerce-scroll-rail gap-4 sm:gap-6 pb-4"
+            >
               {related.map(p => (
-                <ProductCard key={p.id} product={p} />
+                <div
+                  key={p.id}
+                  className="ecommerce-scroll-item w-[260px] sm:w-[280px]"
+                >
+                  <ProductCard product={p} />
+                </div>
               ))}
             </div>
           </section>
