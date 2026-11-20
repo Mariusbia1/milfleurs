@@ -39,7 +39,7 @@ export default function ProductCard({ product }) {
           <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-gold">
             {product.category}
           </p>
-          <span className="flex items-center gap-1 text-[10px] font-medium text-emerald-600 dark:text-emerald-400">
+          <span className="flex items-center gap-1 text-[10px] font-medium text-stone-500 dark:text-stone-300">
             <Check className="h-3 w-3" /> En stock
           </span>
         </div>

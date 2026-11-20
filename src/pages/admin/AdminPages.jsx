@@ -2,8 +2,7 @@ import { useState, useMemo } from 'react'
 import { Navigate, Link, useNavigate, useParams } from 'react-router-dom'
 import {
   Eye, EyeOff, Plus, Search, MoreHorizontal, ArrowUpRight, Package, ShoppingBag,
-  Clock, Banknote, TrendingUp, CheckCircle, AlertCircle, MessageCircle, ArrowRight,
-  Filter, Layers, Sparkles, ExternalLink, RefreshCw
+  Clock, Banknote, TrendingUp, MessageCircle
 } from 'lucide-react'
 import { useAdminAuth } from '../../contexts/AdminAuthContext'
 import { products } from '../../data/products'
@@ -87,7 +86,7 @@ export function LoginPage() {
           </Button>
 
           <Link to="/" className="mt-6 block text-center text-xs text-stone-500 hover:text-ink dark:text-white/60 dark:hover:text-white">
-            ← Retour à la boutique
+            Retour à la boutique
           </Link>
         </form>
       </div>
@@ -111,23 +110,20 @@ const Status = ({ children }) => {
   const isPending = children === 'En attente' || children === 'Nouvelle'
 
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold border ${
       isDelivered
-        ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400'
+        ? 'border-emerald-200 bg-emerald-50/70 text-emerald-800 dark:border-emerald-900/60 dark:bg-emerald-950/30 dark:text-emerald-300'
         : isPending
-        ? 'bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-400'
-        : 'bg-stone-100 text-stone-700 dark:bg-white/10 dark:text-white'
+        ? 'border-amber-200 bg-amber-50/70 text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-300'
+        : 'border-stone-200 bg-stone-100 text-stone-700 dark:border-white/10 dark:bg-white/10 dark:text-white'
     }`}>
-      <span className={`h-1.5 w-1.5 rounded-full ${
-        isDelivered ? 'bg-emerald-500' : isPending ? 'bg-amber-500' : 'bg-stone-400'
-      }`} />
       {children}
     </span>
   )
 }
 
 // =========================================================================
-// MODERN COOL DASHBOARD
+// TABLEAU DE BORD - MODERNE, PROPRE ET PROFESSIONNEL
 // =========================================================================
 export function DashboardPage() {
   const [chartMetric, setChartMetric] = useState('revenue')
@@ -151,19 +147,16 @@ export function DashboardPage() {
 
   return (
     <>
-      {/* Welcome Banner */}
+      {/* Welcome Banner - Sobriété & Élégance */}
       <div className="mb-8 rounded-3xl border border-stone-200/80 bg-white p-6 sm:p-8 shadow-xs dark:border-white/10 dark:bg-white/5">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold">Boutique en ligne en activité</p>
-            </div>
-            <h1 className="mt-2 font-display text-2xl font-normal sm:text-3xl text-ink dark:text-white">
-              Bonjour, Administratrice Milfleurs 👋
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold">Milfleurs Administration</p>
+            <h1 className="mt-1 font-display text-2xl font-normal sm:text-3xl text-ink dark:text-white">
+              Tableau de bord de gestion
             </h1>
             <p className="mt-1 text-xs text-stone-500 dark:text-white/60">
-              Votre activité est en hausse de <b className="text-emerald-600 dark:text-emerald-400">+18.4%</b> ce mois-ci • 7 commandes en attente d’expédition sur WhatsApp.
+              Activité globale en progression de +18.4% ce mois-ci • 7 commandes en attente d'expédition.
             </p>
           </div>
 
@@ -181,7 +174,7 @@ export function DashboardPage() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-xl border border-stone-200 bg-white px-4 py-2.5 text-xs font-semibold text-ink shadow-xs transition hover:bg-stone-50 dark:border-white/15 dark:bg-white/5 dark:text-white"
             >
-              <MessageCircle className="h-3.5 w-3.5 text-emerald-600" />
+              <MessageCircle className="h-3.5 w-3.5 text-stone-700 dark:text-stone-300" />
               <span>WhatsApp Pro</span>
             </a>
           </div>
@@ -196,7 +189,6 @@ export function DashboardPage() {
             label: 'Chiffre d’affaires estimé',
             value: '1 450 000 FCFA',
             trend: '+18.4%',
-            positive: true,
             note: 'vs mois précédent',
           },
           {
@@ -204,24 +196,21 @@ export function DashboardPage() {
             label: 'Commandes totales',
             value: '38 commandes',
             trend: '+12%',
-            positive: true,
             note: '31 confirmées, 7 en attente',
           },
           {
             icon: Package,
-            label: 'Références en ligne',
+            label: 'Références au catalogue',
             value: `${products.length} produits`,
             trend: '+3',
-            positive: true,
-            note: '100% en stock disponible',
+            note: 'Tous les produits en stock',
           },
           {
             icon: TrendingUp,
             label: 'Panier moyen',
             value: '38 150 FCFA',
             trend: '+5.8%',
-            positive: true,
-            note: 'Excellente conversion',
+            note: 'Panier moyen régulier',
           },
         ].map(kpi => {
           const Icon = kpi.icon
@@ -234,11 +223,7 @@ export function DashboardPage() {
                 <span className="grid h-10 w-10 place-items-center rounded-xl bg-mist text-gold dark:bg-white/10">
                   <Icon className="h-5 w-5" />
                 </span>
-                <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                  kpi.positive
-                    ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400'
-                    : 'bg-rose-50 text-rose-700'
-                }`}>
+                <span className="inline-flex items-center gap-1 rounded-full border border-stone-200 px-2 py-0.5 text-[10px] font-semibold text-stone-600 dark:border-white/15 dark:text-white/80">
                   <TrendingUp className="h-3 w-3" />
                   {kpi.trend}
                 </span>
@@ -254,7 +239,7 @@ export function DashboardPage() {
       {/* Main Charts & Analytics Section */}
       <div className="mt-6 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
         
-        {/* Dynamic Interactive Revenue Chart */}
+        {/* Chart */}
         <div className="rounded-2xl border border-stone-200/80 bg-white p-6 shadow-xs dark:border-white/10 dark:bg-white/5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-stone-100 pb-4 dark:border-white/10">
             <div>
@@ -338,10 +323,10 @@ export function DashboardPage() {
 
             <div className="mt-5 space-y-4">
               {[
-                { name: 'Soins du visage', pct: 36, count: 3 },
-                { name: 'Sérums ciblés', pct: 24, count: 2 },
-                { name: 'Beauté coréenne (K-Beauty)', pct: 20, count: 2 },
-                { name: 'Vitamines & Compléments', pct: 20, count: 3 },
+                { name: 'Soins du visage', pct: 36 },
+                { name: 'Sérums ciblés', pct: 24 },
+                { name: 'Beauté coréenne (K-Beauty)', pct: 20 },
+                { name: 'Vitamines & Compléments', pct: 20 },
               ].map(cat => (
                 <div key={cat.name}>
                   <div className="mb-1.5 flex justify-between text-xs">
@@ -360,7 +345,7 @@ export function DashboardPage() {
           </div>
 
           <div className="mt-6 rounded-xl border border-stone-200/80 bg-mist/50 p-3.5 text-xs text-stone-600 dark:border-white/10 dark:bg-white/5 dark:text-white/70">
-            <span className="font-semibold text-ink dark:text-white">Conseil de gestion :</span> Le stock de sérums vitamine C et acide azélaïque est très demandé. Pensez au réassort.
+            <span className="font-semibold text-ink dark:text-white">Note de stock :</span> Les sérums ciblés et les crèmes visage maintiennent le volume de commande le plus stable.
           </div>
         </div>
       </div>
@@ -371,11 +356,11 @@ export function DashboardPage() {
           <div>
             <p className="text-[10px] font-bold uppercase tracking-wider text-gold">Catalogue phare</p>
             <h2 className="mt-0.5 font-display text-lg font-semibold text-ink dark:text-white">
-              Produits les plus vendus
+              Produits les plus consultés
             </h2>
           </div>
           <Link to="/admin/produits" className="text-xs font-semibold text-gold hover:underline">
-            Gérer tout le catalogue ({products.length}) →
+            Gérer tout le catalogue ({products.length})
           </Link>
         </div>
 
@@ -403,11 +388,11 @@ export function DashboardPage() {
         </div>
       </div>
 
-      {/* Recent Orders with Quick Actions */}
+      {/* Recent Orders Table */}
       <div className="mt-6 rounded-2xl border border-stone-200/80 bg-white p-6 shadow-xs dark:border-white/10 dark:bg-white/5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-stone-100 pb-4 dark:border-white/10">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-gold">Dernières transactions</p>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-gold">Dernières commandes</p>
             <h2 className="mt-0.5 font-display text-lg font-semibold text-ink dark:text-white">
               Commandes récentes
             </h2>
@@ -448,7 +433,7 @@ export function DashboardPage() {
           </div>
         </div>
 
-        {/* Interactive Orders Table */}
+        {/* Table */}
         <div className="mt-4 overflow-x-auto">
           <table className="w-full min-w-[760px] text-left text-xs">
             <thead className="border-b border-stone-200 text-stone-400 dark:border-white/10">
@@ -501,7 +486,7 @@ export function DashboardPage() {
                           )}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700 hover:bg-emerald-100 transition dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-400"
+                          className="inline-flex items-center gap-1 rounded-lg border border-stone-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-stone-700 hover:bg-stone-50 transition dark:bg-white/10 dark:border-white/15 dark:text-white"
                           title="Contacter sur WhatsApp"
                         >
                           <MessageCircle className="h-3 w-3" />
@@ -762,7 +747,7 @@ export function OrdersAdmin() {
                   <td className="text-stone-400">{o.date}</td>
                   <td>
                     <Link to={`/admin/commandes/${o.id}`} className="text-gold font-semibold hover:underline">
-                      Voir détail →
+                      Voir détail
                     </Link>
                   </td>
                 </tr>
@@ -832,7 +817,7 @@ export function OrderDetail() {
             )}`}
             target="_blank"
             rel="noreferrer"
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1FB357] py-3 text-xs font-semibold text-white transition hover:bg-[#1a9d4c]"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-ink py-3 text-xs font-semibold text-white transition hover:bg-black"
           >
             <MessageCircle className="h-4 w-4" />
             Échanger sur WhatsApp

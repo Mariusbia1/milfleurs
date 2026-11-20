@@ -229,8 +229,8 @@ export function ConfirmationPage() {
       <SEO title="Commande transmise | Milfleurs" />
       <div className="grid min-h-[65vh] place-items-center px-4 py-20 text-center">
         <div className="max-w-md">
-          <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-            <MessageCircle className="h-8 w-8" />
+          <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-mist text-ink dark:bg-white/10 dark:text-white">
+            <MessageCircle className="h-8 w-8 text-gold" />
           </div>
           <h1 className="mt-6 font-display text-3xl font-normal text-ink sm:text-4xl dark:text-white">
             Votre demande est prête !

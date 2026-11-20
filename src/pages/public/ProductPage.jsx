@@ -116,7 +116,7 @@ export default function ProductPage() {
                   {formatCurrency(product.oldPrice)}
                 </p>
               )}
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400">
+              <span className="inline-flex items-center gap-1 rounded-full border border-stone-200 bg-white px-2.5 py-0.5 text-xs font-medium text-stone-700 dark:border-white/15 dark:bg-white/5 dark:text-white">
                 <Check className="h-3 w-3" /> En stock
               </span>
             </div>
@@ -209,7 +209,7 @@ export default function ProductPage() {
               rel="noreferrer"
               className="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-full border border-stone-300 bg-white px-6 py-3 text-xs font-semibold text-ink transition hover:border-stone-400 hover:bg-stone-50 dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
             >
-              <MessageCircle className="h-4 w-4 text-emerald-600" />
+              <MessageCircle className="h-4 w-4 text-stone-600 dark:text-stone-300" />
               Commander directement sur WhatsApp
             </a>
 

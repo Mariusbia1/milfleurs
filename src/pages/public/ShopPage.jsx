@@ -139,7 +139,7 @@ export default function ShopPage({ categorySlug }) {
                   rel="noreferrer"
                   className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-white px-3.5 py-2.5 text-xs font-semibold text-ink border border-stone-200 shadow-xs transition hover:border-stone-400 hover:bg-stone-50 dark:bg-white/10 dark:border-white/15 dark:text-white dark:hover:bg-white/20"
                 >
-                  <MessageCircle className="h-3.5 w-3.5 text-emerald-600" />
+                  <MessageCircle className="h-3.5 w-3.5" />
                   Poser une question
                 </a>
               </div>

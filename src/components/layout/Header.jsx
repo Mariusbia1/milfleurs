@@ -38,10 +38,9 @@ export default function Header() {
       <header className="sticky top-0 z-40 border-b border-stone-200/70 bg-ivory/95 backdrop-blur-md transition-colors dark:border-white/10 dark:bg-plum/95">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
-          <Link to="/" className="group flex items-baseline gap-1 font-display text-2xl tracking-tight sm:text-3xl">
+          <Link to="/" className="group flex items-baseline font-display text-2xl tracking-tight sm:text-3xl">
             <span className="font-semibold text-ink dark:text-white">Mil</span>
             <span className="italic font-normal text-gold transition group-hover:opacity-85">fleurs</span>
-            <span className="h-1.5 w-1.5 rounded-full bg-gold"></span>
           </Link>
 
           {/* Navigation links */}

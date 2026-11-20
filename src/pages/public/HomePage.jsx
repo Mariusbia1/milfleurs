@@ -79,7 +79,7 @@ export default function HomePage() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <MessageCircle className="h-4 w-4 text-emerald-600" />
+                <MessageCircle className="h-4 w-4" />
                 Conseil WhatsApp
               </Button>
             </div>
@@ -310,7 +310,7 @@ export default function HomePage() {
               target="_blank"
               rel="noreferrer"
             >
-              <MessageCircle className="h-4 w-4 text-emerald-600" />
+              <MessageCircle className="h-4 w-4" />
               Poser une question sur WhatsApp
             </Button>
           </div>
