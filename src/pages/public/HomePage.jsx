@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, BadgeCheck, HeartPulse, PackageCheck, Star, MessageCircle, ShieldCheck, Award, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import SEO from '../../components/common/SEO'
@@ -11,8 +11,20 @@ import { categories } from '../../data/categories'
 import { testimonials } from '../../data/testimonials'
 import { faq } from '../../data/faq'
 import { siteConfig } from '../../config/siteConfig'
-import heroImage from '../../assets/milfleur-hero.png'
 import skincareImage from '../../assets/milfleur-skincare.png'
+import supplementsImage from '../../assets/milfleur-supplements.png'
+import heroSq1 from '../../assets/hero-product-sq-1.png'
+import heroSq2 from '../../assets/hero-product-sq-2.png'
+import heroSq3 from '../../assets/hero-product-sq-3.png'
+
+// Pure product visual items for the Hero (NO PRICES - simple visual showcases that circulate)
+const heroShowcaseItems = [
+  { id: 1, name: 'Crème visage éclat', category: 'Soin hydratant illuminateur', image: skincareImage },
+  { id: 2, name: 'Sérum équilibrant dermo', category: 'Sérum actif ciblé', image: heroSq1 },
+  { id: 3, name: 'Toner hydratant K-Beauty', category: 'Rituel beauté coréenne', image: heroSq2 },
+  { id: 4, name: 'Collagène & Vitamines', category: 'Nutrition cellulaire', image: supplementsImage },
+  { id: 5, name: 'Lait corps nourrissant', category: 'Confort cutané haute nutrition', image: heroSq3 },
+]
 
 const SectionTitle = ({ eyebrow, children, subtitle, action }) => (
   <div className="mb-8 flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
@@ -41,6 +53,27 @@ export default function HomePage() {
   const testimonialRailRef = useRef(null)
   const [productScrollProgress, setProductScrollProgress] = useState(0)
 
+  // Active slide index for the Hero Auto-circulating showcase
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0)
+  const [isHeroPaused, setIsHeroPaused] = useState(false)
+
+  // Auto-scroll / Auto-circulate the Hero products on their own (3.5s timer)
+  useEffect(() => {
+    if (isHeroPaused) return
+    const timer = setInterval(() => {
+      setActiveHeroIndex(prev => (prev + 1) % heroShowcaseItems.length)
+    }, 3500)
+    return () => clearInterval(timer)
+  }, [isHeroPaused])
+
+  const nextHeroSlide = () => {
+    setActiveHeroIndex(prev => (prev + 1) % heroShowcaseItems.length)
+  }
+
+  const prevHeroSlide = () => {
+    setActiveHeroIndex(prev => (prev - 1 + heroShowcaseItems.length) % heroShowcaseItems.length)
+  }
+
   const scrollRail = (ref, direction) => {
     if (ref.current) {
       const scrollAmount = ref.current.clientWidth * 0.75
@@ -59,72 +92,172 @@ export default function HomePage() {
     }
   }
 
+  const currentHeroProduct = heroShowcaseItems[activeHeroIndex]
+
   return (
     <>
       <SEO title="Milfleurs | Beauté, soins & compléments authentiques" />
 
-      {/* Hero Section */}
-      <section className="relative min-h-[85vh] overflow-hidden bg-[#F6F2EE] dark:bg-[#181316]">
-        <img
-          src={heroImage}
-          alt="Sélection beauté et bien-être Milfleurs"
-          className="absolute inset-0 h-full w-full object-cover object-center"
-        />
-        <div className="hero-overlay absolute inset-0" />
+      {/* Hero Section with Auto-Circulating Products (No static 3 products together, no prices) */}
+      <section className="relative overflow-hidden bg-[#FAF7F4] pt-12 pb-16 sm:py-20 lg:py-24 dark:bg-[#161215]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            
+            {/* Left Column: Brand Message & Call to Action */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="max-w-2xl"
+            >
+              <div className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-ink/80 shadow-xs dark:bg-white/5 dark:text-white dark:border-white/15">
+                <Award className="h-3.5 w-3.5 text-gold" />
+                <span>Cosmétiques & Compléments Sélectionnés</span>
+              </div>
 
-        <div className="relative mx-auto flex min-h-[85vh] max-w-7xl items-center px-4 py-20 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="hero-content max-w-2xl"
-          >
-            <div className="inline-flex items-center gap-2 rounded-full border border-stone-300/80 bg-white/90 px-4 py-1.5 text-xs font-semibold tracking-wider text-ink/80 backdrop-blur-md shadow-xs dark:bg-black/60 dark:text-white dark:border-white/20">
-              <Award className="h-3.5 w-3.5 text-gold" />
-              <span>Cosmétiques & Compléments Sélectionnés</span>
+              <h1 className="mt-6 font-display text-4xl font-normal leading-[1.08] text-ink sm:text-6xl md:text-7xl dark:text-white">
+                Votre beauté,<br />
+                <span className="italic font-normal text-gold">notre sélection.</span>
+              </h1>
+
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-stone-700 sm:text-lg dark:text-white/70">
+                Soins dermocosmétiques, cosmétiques K-Beauty et compléments nutritionnels authentiques, directement importés d’Europe, des États-Unis et de Corée.
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <Button to="/collections" variant="dark">
+                  Découvrir la boutique
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+                <Button
+                  to={`https://wa.me/${siteConfig.whatsapp}`}
+                  variant="outline"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Conseil WhatsApp
+                </Button>
+              </div>
+
+              {/* Reassurance Metrics */}
+              <div className="mt-12 grid grid-cols-3 gap-6 border-t border-stone-200/80 pt-8 dark:border-white/10">
+                <div>
+                  <span className="block font-display text-2xl font-bold text-ink sm:text-3xl dark:text-white">100%</span>
+                  <span className="text-xs text-stone-500 uppercase tracking-wider dark:text-white/60">Authentique</span>
+                </div>
+                <div>
+                  <span className="block font-display text-2xl font-bold text-ink sm:text-3xl dark:text-white">3</span>
+                  <span className="text-xs text-stone-500 uppercase tracking-wider dark:text-white/60">Continents</span>
+                </div>
+                <div>
+                  <span className="block font-display text-2xl font-bold text-ink sm:text-3xl dark:text-white">24–48h</span>
+                  <span className="text-xs text-stone-500 uppercase tracking-wider dark:text-white/60">Expédition</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right Column: Hero Auto-Circulating Product Showcase (Individual products scroll automatically, NO prices) */}
+            <div
+              className="relative mx-auto w-full max-w-md lg:max-w-none"
+              onMouseEnter={() => setIsHeroPaused(true)}
+              onMouseLeave={() => setIsHeroPaused(false)}
+            >
+              <div className="relative aspect-[4/4.5] overflow-hidden rounded-3xl border border-stone-200/80 bg-white p-6 sm:p-8 shadow-card dark:border-white/10 dark:bg-white/5">
+                
+                {/* Active Product Image Transition */}
+                <div className="relative h-[78%] w-full flex items-center justify-center">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={currentHeroProduct.id}
+                      src={currentHeroProduct.image}
+                      alt={currentHeroProduct.name}
+                      initial={{ opacity: 0, scale: 0.96 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 1.02 }}
+                      transition={{ duration: 0.4 }}
+                      className="h-full w-full object-contain"
+                    />
+                  </AnimatePresence>
+                </div>
+
+                {/* Product Info (Name & Category ONLY - NO PRICE as requested) */}
+                <div className="mt-4 flex items-end justify-between border-t border-stone-100 pt-4 dark:border-white/10">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gold">
+                      {currentHeroProduct.category}
+                    </p>
+                    <h3 className="mt-0.5 font-display text-lg font-semibold text-ink sm:text-xl dark:text-white">
+                      {currentHeroProduct.name}
+                    </h3>
+                  </div>
+
+                  {/* Manual Arrow Controls */}
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={prevHeroSlide}
+                      className="grid h-8 w-8 place-items-center rounded-full border border-stone-200 bg-white text-stone-700 transition hover:bg-stone-50 dark:border-white/15 dark:bg-white/10 dark:text-white"
+                      aria-label="Produit précédent"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={nextHeroSlide}
+                      className="grid h-8 w-8 place-items-center rounded-full border border-stone-200 bg-white text-stone-700 transition hover:bg-stone-50 dark:border-white/15 dark:bg-white/10 dark:text-white"
+                      aria-label="Produit suivant"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Circulation Progress Indicators */}
+                <div className="mt-4 flex items-center gap-1.5">
+                  {heroShowcaseItems.map((item, idx) => (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveHeroIndex(idx)}
+                      className={`h-1 flex-1 rounded-full transition-all duration-300 ${
+                        activeHeroIndex === idx
+                          ? 'bg-gold'
+                          : 'bg-stone-200 dark:bg-white/15 hover:bg-stone-300'
+                      }`}
+                      aria-label={`Afficher ${item.name}`}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <h1 className="mt-6 font-display text-4xl font-normal leading-[1.08] text-ink sm:text-6xl md:text-7xl dark:text-white">
-              Votre beauté,<br />
-              <span className="italic font-normal text-gold">notre sélection.</span>
-            </h1>
+          </div>
 
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-stone-700 sm:text-lg dark:text-white/70">
-              Soins dermocosmétiques, cosmétiques K-Beauty et compléments nutritionnels authentiques, directement importés d’Europe, des États-Unis et de Corée.
+          {/* Continuous Auto-Scrolling Product Ticker / Marquee (Visual products circulating infinitely) */}
+          <div className="mt-16 overflow-hidden border-t border-stone-200/80 pt-8 dark:border-white/10">
+            <p className="mb-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
+              Aperçu des soins & compléments en circulation
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Button to="/collections" variant="dark">
-                Découvrir la boutique
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-              <Button
-                to={`https://wa.me/${siteConfig.whatsapp}`}
-                variant="outline"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <MessageCircle className="h-4 w-4" />
-                Conseil WhatsApp
-              </Button>
+            <div className="animate-ecommerce-marquee gap-4 sm:gap-6 py-2">
+              {/* Duplicate the items for seamless infinite circulation */}
+              {[...heroShowcaseItems, ...heroShowcaseItems].map((item, index) => (
+                <div
+                  key={`${item.id}-${index}`}
+                  className="flex w-56 sm:w-64 shrink-0 items-center gap-3 rounded-2xl border border-stone-200/70 bg-white/80 p-3 shadow-xs dark:border-white/10 dark:bg-white/5"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="h-14 w-14 rounded-xl object-contain bg-[#FAF7F4] p-1 dark:bg-white/5"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-xs font-semibold text-ink dark:text-white">{item.name}</p>
+                    <p className="truncate text-[10px] text-stone-400">{item.category}</p>
+                  </div>
+                </div>
+              ))}
             </div>
+          </div>
 
-            {/* Reassurance Metrics */}
-            <div className="mt-12 grid grid-cols-3 gap-6 border-t border-stone-300/60 pt-8 dark:border-white/10">
-              <div>
-                <span className="block font-display text-2xl font-bold text-ink sm:text-3xl dark:text-white">100%</span>
-                <span className="text-xs text-stone-500 uppercase tracking-wider dark:text-white/60">Authentique</span>
-              </div>
-              <div>
-                <span className="block font-display text-2xl font-bold text-ink sm:text-3xl dark:text-white">3</span>
-                <span className="text-xs text-stone-500 uppercase tracking-wider dark:text-white/60">Continents</span>
-              </div>
-              <div>
-                <span className="block font-display text-2xl font-bold text-ink sm:text-3xl dark:text-white">24–48h</span>
-                <span className="text-xs text-stone-500 uppercase tracking-wider dark:text-white/60">Expédition</span>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
@@ -142,7 +275,7 @@ export default function HomePage() {
         </p>
       </section>
 
-      {/* Featured Products - Conforme au format scroll des boutiques e-commerce */}
+      {/* Featured Products - Scroll-Snap Carrousel Conforme E-Commerce */}
       <section className="bg-mist/70 py-16 md:py-20 dark:bg-white/[0.02]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionTitle
@@ -314,7 +447,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials - Conforme au scroll des avis e-commerce */}
+      {/* Testimonials - Scroll Carrousel */}
       <section className="border-y border-stone-200/80 bg-ink py-20 text-white dark:border-white/10 dark:bg-[#110E10]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 flex flex-col items-center justify-between gap-4 sm:flex-row sm:items-end">
@@ -375,7 +508,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-24">
+      <section className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:py-24">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
             Questions fréquentes

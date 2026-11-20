@@ -81,6 +81,22 @@
     flex-shrink: 0;
   }
 
+  /* E-Commerce infinite auto-scrolling marquee */
+  @keyframes ecommerce-marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-ecommerce-marquee {
+    display: flex;
+    width: max-content;
+    animation: ecommerce-marquee 32s linear infinite;
+  }
+
+  .animate-ecommerce-marquee:hover {
+    animation-play-state: paused;
+  }
+
   .admin-content > * {
     animation: admin-fade-in .25s ease both;
   }
