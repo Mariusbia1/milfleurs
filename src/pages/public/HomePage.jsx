@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useSpring } from 'framer-motion'
 import { ArrowRight, BadgeCheck, HeartPulse, PackageCheck, Star, MessageCircle, ShieldCheck, Award, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import SEO from '../../components/common/SEO'
@@ -16,7 +16,13 @@ import skincareImage from '../../assets/milfleur-skincare.png'
 import supplementsImage from '../../assets/milfleur-supplements.png'
 
 const SectionTitle = ({ eyebrow, children, subtitle, action }) => (
-  <div className="mb-8 flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
+  <motion.div
+    initial={{ opacity: 0, y: 25 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-40px' }}
+    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    className="mb-8 flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left"
+  >
     <div>
       {eyebrow && (
         <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-gold">
@@ -33,7 +39,7 @@ const SectionTitle = ({ eyebrow, children, subtitle, action }) => (
       )}
     </div>
     {action}
-  </div>
+  </motion.div>
 )
 
 export default function HomePage() {
@@ -41,6 +47,14 @@ export default function HomePage() {
   const productRailRef = useRef(null)
   const testimonialRailRef = useRef(null)
   const [productScrollProgress, setProductScrollProgress] = useState(0)
+
+  // Top luxury scroll progress
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
 
   // Hero background images that cycle automatically one by one
   const heroBackgrounds = [skincareImage, supplementsImage, heroImage]
@@ -71,11 +85,27 @@ export default function HomePage() {
     }
   }
 
+  // Animation variants for smooth luxury scroll reveals
+  const fadeUpVariant = {
+    hidden: { opacity: 0, y: 35 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
+    }
+  }
+
   return (
     <>
       <SEO title="Milfleurs | Beauté, soins & compléments authentiques" />
 
-      {/* Hero Section - Présentation identique d'origine avec défilement automatique des visuels produits */}
+      {/* Top E-Commerce Page Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[2.5px] bg-gold origin-left z-50 pointer-events-none"
+        style={{ scaleX }}
+      />
+
+      {/* Hero Section - Présentation authentique d'origine avec défilement automatique des visuels */}
       <section className="relative min-h-[85vh] overflow-hidden bg-[#F6F2EE] dark:bg-[#181316]">
         {/* Background Images that circulate automatically */}
         {heroBackgrounds.map((bg, idx) => (
@@ -95,7 +125,7 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="hero-content max-w-2xl"
           >
             <div className="inline-flex items-center gap-2 rounded-full border border-stone-300/80 bg-white/90 px-4 py-1.5 text-xs font-semibold tracking-wider text-ink/80 backdrop-blur-md shadow-xs dark:bg-black/60 dark:text-white dark:border-white/20">
@@ -147,8 +177,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Brand Intro Statement */}
-      <section className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 md:py-24">
+      {/* Infinite Scrolling E-Commerce Marquee Rail */}
+      <div className="border-y border-stone-200/80 bg-stone-100/70 py-3.5 overflow-hidden whitespace-nowrap dark:border-white/10 dark:bg-white/[0.03]">
+        <div className="flex w-max animate-ecommerce-marquee items-center gap-8 text-[11px] font-semibold uppercase tracking-[0.25em] text-ink/75 dark:text-white/75">
+          <span className="flex items-center gap-2">Importations directes Europe & USA <span className="text-gold">•</span></span>
+          <span className="flex items-center gap-2">100% Authenticité Garantie <span className="text-gold">•</span></span>
+          <span className="flex items-center gap-2">Soins K-Beauty & Dermocosmétique <span className="text-gold">•</span></span>
+          <span className="flex items-center gap-2">Expédition express 24-48h <span className="text-gold">•</span></span>
+          <span className="flex items-center gap-2">Compléments nutritionnels certifiés <span className="text-gold">•</span></span>
+          <span className="flex items-center gap-2">Conseils personnalisés d’experts <span className="text-gold">•</span></span>
+          {/* Duplicate set for seamless continuous marquee */}
+          <span className="flex items-center gap-2">Importations directes Europe & USA <span className="text-gold">•</span></span>
+          <span className="flex items-center gap-2">100% Authenticité Garantie <span className="text-gold">•</span></span>
+          <span className="flex items-center gap-2">Soins K-Beauty & Dermocosmétique <span className="text-gold">•</span></span>
+          <span className="flex items-center gap-2">Expédition express 24-48h <span className="text-gold">•</span></span>
+          <span className="flex items-center gap-2">Compléments nutritionnels certifiés <span className="text-gold">•</span></span>
+          <span className="flex items-center gap-2">Conseils personnalisés d’experts <span className="text-gold">•</span></span>
+        </div>
+      </div>
+
+      {/* Brand Intro Statement with Scroll Reveal */}
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 md:py-24"
+      >
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
           L’art de prendre soin de soi
         </p>
@@ -159,10 +214,16 @@ export default function HomePage() {
         <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-stone-600 dark:text-white/70">
           Nous sélectionnons des formules éprouvées et des marques de confiance pour vous offrir une routine simple, efficace et parfaitement adaptée à vos exigences cutanées et de bien-être.
         </p>
-      </section>
+      </motion.section>
 
-      {/* Featured Products - Scroll-Snap Carrousel Conforme E-Commerce */}
-      <section className="bg-mist/70 py-16 md:py-20 dark:bg-white/[0.02]">
+      {/* Featured Products - Scroll-Snap Carrousel Conforme E-Commerce with Scroll Entrance */}
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="bg-mist/70 py-16 md:py-20 dark:bg-white/[0.02]"
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionTitle
             eyebrow="Les incontournables"
@@ -189,19 +250,23 @@ export default function HomePage() {
             Nos coups de cœur
           </SectionTitle>
 
-          {/* Horizontal Scroll-Snap Product Rail */}
+          {/* Horizontal Scroll-Snap Product Rail with Staggered Entrance */}
           <div
             ref={productRailRef}
             onScroll={handleProductScroll}
             className="ecommerce-scroll-rail gap-4 sm:gap-6 pb-6 pt-2"
           >
-            {featuredProducts.map(p => (
-              <div
+            {featuredProducts.map((p, idx) => (
+              <motion.div
                 key={p.id}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-30px' }}
+                transition={{ duration: 0.5, delay: Math.min(idx * 0.08, 0.4), ease: 'easeOut' }}
                 className="ecommerce-scroll-item w-[270px] sm:w-[290px] md:w-[310px]"
               >
                 <ProductCard product={p} />
-              </div>
+              </motion.div>
             ))}
           </div>
 
@@ -222,9 +287,9 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* Categories Grid / Scroll */}
+      {/* Categories Grid with Scroll Entrance */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
         <SectionTitle
           eyebrow="Explorer"
@@ -236,34 +301,45 @@ export default function HomePage() {
         {/* Scrollable categories on mobile, grid on tablet & desktop */}
         <div className="ecommerce-scroll-rail gap-4 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible">
           {categories.map((c, i) => (
-            <Link
+            <motion.div
               key={c.slug}
-              to={`/categories/${c.slug}`}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className={`${
                 i === 0 || i === 5 ? 'md:col-span-2' : ''
               } ecommerce-scroll-item w-[260px] md:w-auto group relative h-64 overflow-hidden rounded-2xl bg-stone-100 md:h-80`}
             >
-              <img
-                src={c.image}
-                alt={c.name}
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <span className="font-display text-xl font-medium text-white sm:text-2xl">
-                  {c.name}
-                </span>
-                <span className="mt-1 flex items-center gap-1.5 text-xs font-semibold text-white/80 opacity-0 transition group-hover:opacity-100">
-                  Explorer la gamme <ArrowRight className="h-3 w-3" />
-                </span>
-              </div>
-            </Link>
+              <Link to={`/categories/${c.slug}`} className="block h-full w-full">
+                <img
+                  src={c.image}
+                  alt={c.name}
+                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <span className="font-display text-xl font-medium text-white sm:text-2xl">
+                    {c.name}
+                  </span>
+                  <span className="mt-1 flex items-center gap-1.5 text-xs font-semibold text-white/80 opacity-0 transition group-hover:opacity-100">
+                    Explorer la gamme <ArrowRight className="h-3 w-3" />
+                  </span>
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Brand Exigence / Editorial Highlight */}
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      {/* Brand Exigence / Editorial Highlight with Smooth Scroll Entrance */}
+      <motion.section
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-70px' }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8"
+      >
         <div className="overflow-hidden rounded-3xl border border-stone-200/80 bg-linen/50 dark:border-white/10 dark:bg-white/5">
           <div className="grid md:grid-cols-2">
             <div className="relative min-h-[380px] md:min-h-[500px]">
@@ -311,9 +387,9 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* Trust Pillars */}
+      {/* Trust Pillars with Staggered Scroll Reveal */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
           {[
@@ -321,20 +397,33 @@ export default function HomePage() {
             [Award, 'Sélection Ciblée', 'Des formules dermatologiques et nutritionnelles plébiscitées.'],
             [HeartPulse, 'Beauté & Bien-être', 'Une approche globale qui allie soins extérieurs et compléments internes.'],
             [PackageCheck, 'Livraison Soignée', 'Colis sécurisés et expédiés rapidement à Cotonou et à l’international.'],
-          ].map(([Icon, title, desc]) => (
-            <div key={title} className="rounded-2xl border border-stone-200/70 bg-white p-6 dark:border-white/10 dark:bg-white/5">
+          ].map(([Icon, title, desc], idx) => (
+            <motion.div
+              key={title}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.6, delay: idx * 0.1, ease: 'easeOut' }}
+              className="rounded-2xl border border-stone-200/70 bg-white p-6 shadow-xs transition-transform duration-300 hover:-translate-y-1 dark:border-white/10 dark:bg-white/5"
+            >
               <div className="grid h-12 w-12 place-items-center rounded-xl bg-mist text-gold dark:bg-white/10">
                 <Icon className="h-6 w-6" />
               </div>
               <h3 className="mt-5 font-display text-lg font-semibold text-ink dark:text-white">{title}</h3>
               <p className="mt-2 text-xs leading-relaxed text-stone-500 dark:text-white/60">{desc}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Testimonials - Scroll Carrousel */}
-      <section className="border-y border-stone-200/80 bg-ink py-20 text-white dark:border-white/10 dark:bg-[#110E10]">
+      {/* Testimonials - Scroll Carrousel with Scroll Entrance */}
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="border-y border-stone-200/80 bg-ink py-20 text-white dark:border-white/10 dark:bg-[#110E10]"
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 flex flex-col items-center justify-between gap-4 sm:flex-row sm:items-end">
             <div>
@@ -368,9 +457,13 @@ export default function HomePage() {
             ref={testimonialRailRef}
             className="ecommerce-scroll-rail gap-6 pb-4"
           >
-            {testimonials.map(t => (
-              <blockquote
+            {testimonials.map((t, idx) => (
+              <motion.blockquote
                 key={t.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-30px' }}
+                transition={{ duration: 0.5, delay: Math.min(idx * 0.08, 0.3), ease: 'easeOut' }}
                 className="ecommerce-scroll-item w-[300px] sm:w-[360px] flex flex-col justify-between rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-white/20"
               >
                 <div>
@@ -387,14 +480,20 @@ export default function HomePage() {
                   <p className="text-xs font-semibold text-white">{t.name}</p>
                   <p className="text-[11px] text-white/50">{t.city} • Achat vérifié</p>
                 </footer>
-              </blockquote>
+              </motion.blockquote>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* FAQ Section */}
-      <section className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:py-24">
+      {/* FAQ Section with Scroll Entrance */}
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:py-24"
+      >
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
             Questions fréquentes
@@ -418,10 +517,16 @@ export default function HomePage() {
           </div>
         </div>
         <Accordion items={faq} />
-      </section>
+      </motion.section>
 
-      {/* Bottom CTA Banner */}
-      <section className="border-t border-stone-200/80 bg-mist/60 px-4 py-16 text-center sm:px-6 dark:border-white/10 dark:bg-white/[0.02]">
+      {/* Bottom CTA Banner with Scroll Entrance */}
+      <motion.section
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="border-t border-stone-200/80 bg-mist/60 px-4 py-16 text-center sm:px-6 dark:border-white/10 dark:bg-white/[0.02]"
+      >
         <div className="mx-auto max-w-2xl">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
             Prêt à commencer ?
@@ -438,7 +543,7 @@ export default function HomePage() {
             </Button>
           </div>
         </div>
-      </section>
+      </motion.section>
     </>
   )
 }

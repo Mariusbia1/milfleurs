@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { motion } from 'framer-motion'
 import { Search, ShieldCheck, Filter, X, Check, MessageCircle, ArrowRight } from 'lucide-react'
 import SEO from '../../components/common/SEO'
 import ProductCard from '../../components/products/ProductCard'
@@ -228,8 +229,16 @@ export default function ShopPage({ categorySlug }) {
             {/* Product Grid */}
             {filtered.length > 0 ? (
               <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 xl:grid-cols-3">
-                {filtered.map(product => (
-                  <ProductCard key={product.id} product={product} />
+                {filtered.map((product, idx) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-40px' }}
+                    transition={{ duration: 0.45, delay: Math.min((idx % 6) * 0.05, 0.25), ease: 'easeOut' }}
+                  >
+                    <ProductCard product={product} />
+                  </motion.div>
                 ))}
               </div>
             ) : (

@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { motion } from 'framer-motion'
 import { useParams, Link } from 'react-router-dom'
 import { Minus, Plus, MessageCircle, ShieldCheck, Truck, RefreshCw, Check, ChevronLeft, ChevronRight } from 'lucide-react'
 import toast from 'react-hot-toast'
@@ -260,7 +261,13 @@ export default function ProductPage() {
 
         {/* Related Products - Conforme au format scroll e-commerce */}
         {related.length > 0 && (
-          <section className="mt-24 border-t border-stone-200/80 pt-16 dark:border-white/10">
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-24 border-t border-stone-200/80 pt-16 dark:border-white/10"
+          >
             <div className="mb-8 flex items-center justify-between">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">Suggestions</p>
@@ -299,7 +306,7 @@ export default function ProductPage() {
                 </div>
               ))}
             </div>
-          </section>
+          </motion.section>
         )}
       </div>
     </>
