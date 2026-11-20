@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="120" fill="#351121"/>
-  <rect x="30" y="30" width="452" height="452" rx="94" fill="none" stroke="#FFF8FB" stroke-opacity=".18" stroke-width="3"/>
-  <path d="M108 340V164h39l67 103 67-103h38v176h-41V229l-61 92h-8l-61-92v111h-40Z" fill="#FFF8FB"/>
-  <path d="M337 340V164h91v37h-50v37h44v36h-44v66h-41Z" fill="#FFF8FB"/>
-  <path d="M379 121c25 7 36 24 33 48-25 4-43-8-50-32 4-9 9-14 17-16Z" fill="#E84F8A"/>
-  <path d="M363 137c-3-24 9-42 34-49 11 22 5 43-17 57-8-1-13-3-17-8Z" fill="#F8B8D1"/>
-  <circle cx="256" cy="404" r="7" fill="#E84F8A"/>
+  <rect width="512" height="512" rx="128" fill="#1A1517"/>
+  <rect x="24" y="24" width="464" height="464" rx="104" fill="none" stroke="#B9864E" stroke-opacity="0.3" stroke-width="2"/>
+  <!-- Elegant Serif Letter M with Luxury Proportions -->
+  <path d="M140 360V152h44l72 126 72-126h44v208h-38V228l-68 116h-20l-68-116v132h-38Z" fill="#FAF8F5"/>
+  <!-- Refined Champagne Gold Botanical Leaf Accent -->
+  <path d="M372 136c18 4 30 18 28 36-19 3-33-6-38-24 3-7 6-10 10-12Z" fill="#B9864E"/>
+  <circle cx="256" cy="386" r="5" fill="#B9864E"/>
 </svg>

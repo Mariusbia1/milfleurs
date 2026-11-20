@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, BadgeCheck, HeartPulse, PackageCheck, Sparkles, Star, MessageCircle, ShieldCheck } from 'lucide-react'
+import { ArrowRight, BadgeCheck, HeartPulse, PackageCheck, Star, MessageCircle, ShieldCheck, Award } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import SEO from '../../components/common/SEO'
 import Button from '../../components/common/Button'
@@ -55,7 +55,7 @@ export default function HomePage() {
             className="hero-content max-w-2xl"
           >
             <div className="inline-flex items-center gap-2 rounded-full border border-stone-300/80 bg-white/90 px-4 py-1.5 text-xs font-semibold tracking-wider text-ink/80 backdrop-blur-md shadow-xs dark:bg-black/60 dark:text-white dark:border-white/20">
-              <Sparkles className="h-3.5 w-3.5 text-gold" />
+              <Award className="h-3.5 w-3.5 text-gold" />
               <span>Cosmétiques & Compléments Sélectionnés</span>
             </div>
 
@@ -235,7 +235,7 @@ export default function HomePage() {
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           {[
             [BadgeCheck, 'Produits 100% Authentiques', 'Directement importés auprès de fournisseurs agréés et certifiés.'],
-            [Sparkles, 'Sélection Ciblée', 'Des formules dermatologiques et nutritionnelles plébiscitées.'],
+            [Award, 'Sélection Ciblée', 'Des formules dermatologiques et nutritionnelles plébiscitées.'],
             [HeartPulse, 'Beauté & Bien-être', 'Une approche globale qui allie soins extérieurs et compléments internes.'],
             [PackageCheck, 'Livraison Soignée', 'Colis sécurisés et expédiés rapidement à Cotonou et à l’international.'],
           ].map(([Icon, title, desc]) => (

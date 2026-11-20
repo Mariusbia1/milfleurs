@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Instagram, Facebook, ShieldCheck, Truck, Sparkles, MessageCircle } from 'lucide-react'
+import { Instagram, Facebook, ShieldCheck, Truck, Headphones, MessageCircle } from 'lucide-react'
 import { siteConfig } from '../../config/siteConfig'
 
 export default function Footer() {
@@ -28,7 +28,7 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-4">
             <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 text-gold">
-              <Sparkles className="h-5 w-5" />
+              <Headphones className="h-5 w-5" />
             </div>
             <div>
               <p className="font-semibold text-sm text-white">Conseils & Suivi</p>

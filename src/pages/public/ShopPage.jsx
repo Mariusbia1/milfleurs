@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Search, Sparkles, Filter, X, Check, MessageCircle, ArrowRight } from 'lucide-react'
+import { Search, ShieldCheck, Filter, X, Check, MessageCircle, ArrowRight } from 'lucide-react'
 import SEO from '../../components/common/SEO'
 import ProductCard from '../../components/products/ProductCard'
 import { products } from '../../data/products'
@@ -57,7 +57,7 @@ export default function ShopPage({ categorySlug }) {
               </p>
             </div>
             <div className="flex items-center gap-2 text-xs font-semibold text-gold">
-              <Sparkles className="h-4 w-4" />
+              <ShieldCheck className="h-4 w-4" />
               <span>Importations directes certifiées</span>
             </div>
           </div>

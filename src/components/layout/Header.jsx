@@ -24,7 +24,7 @@ export default function Header() {
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="hidden items-center gap-2 sm:flex">
             <ShieldCheck className="h-3.5 w-3.5 text-gold" />
-            <span>Produits 100% certifiés authentiques & importés</span>
+            <span>Sélection certifiée authentique · Importations d’origine</span>
           </div>
           <p className="mx-auto text-center sm:mx-0">
             Livraison rapide à Cotonou & expédition internationale

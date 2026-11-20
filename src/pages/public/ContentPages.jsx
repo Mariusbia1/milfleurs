@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight, X, MessageCircle, Mail, MapPin, ShieldCheck, HeartHandshake, Sparkles } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X, MessageCircle, Mail, MapPin, ShieldCheck, HeartHandshake } from 'lucide-react'
 import SEO from '../../components/common/SEO'
 import Button from '../../components/common/Button'
 import Accordion from '../../components/common/Accordion'
